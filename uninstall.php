@@ -6,9 +6,10 @@
 
  if( !defined('WP_UNINSTALL_PLUGIN') ) : die; endif;
 
- //clear database stored data
- $events = get_posts( array('post_type' => 'wp_quick_event', 'numberposts' => -1));
+ //IMPORTANT - DO NOT CHANGE CODE UNLESS YOU ARE FAMILIAR WITH SQL
+ //MANUALLY MAKES ALTERATIONS TO DATABASE.
+ global $wpdb;
 
- foreach( $events as $event ) {
-    wp_delete_post( $event->ID,  true);
- }
+ $wpdb->query("DELETE FROM wp_postmeta WHERE post_id IN (SELECT id FROM wp_posts WHERE post_type = 'wp_quick_event')");
+ $wpdb->query("DELETE FROM wp_term_relationships WHERE object_id IN (SELECT id FROM wp_posts WHERE post_type = 'wp_quick_event')");
+ $wpdb->query("DELETE FROM wp_posts WHERE post_type = 'wp_quick_event'"); 
