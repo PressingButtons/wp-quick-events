@@ -2,6 +2,7 @@
 
 if(!defined('ABSPATH')): die("Sorry, this file is not open for public access."); endif;
 
+
 class WPQEventsAdmin {
 
     function __construct( ) { 
@@ -21,18 +22,23 @@ class WPQEventsAdmin {
         flush_rewrite_rules( );
     }
 
-    function uninstall( ) {
-        //delete custom post type
-        //delete plugin data from database
-    }
-
     function custom_post_type( ) {
         register_post_type('wp_quick_event', array('public' => true, 'description' => 'post for user generated quick events', 'label' => 'WP Quick Events'));
+    }
+
+    function enqueue( ) {
+        wp_enqueue_style('wp-quick-events-style', plugins_url('/assets/wpqe-style.css', __FILE__));
+        wp_enqueue_script('wp-quick-events-script', plugins_url('/assets/wpqe-script.js', __FILE__));
+    }
+
+    function register( ) {
+        add_action('admin_enqueue_scripts', array($this, 'enqueue'));
     }
 
 }
 
 if(class_exists('WPQEventsAdmin')):
     $wpqe_admin = new WPQEventsAdmin( );
+    $wpqe_admin->register( );
 endif;
 
