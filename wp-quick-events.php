@@ -46,6 +46,7 @@ define('WPQEVENTS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 require_once( WPQEVENTS_PLUGIN_DIR . 'class-wpqevents-admin.php');
 require_once( WPQEVENTS_PLUGIN_DIR . 'class-wpqe_metaboxes.php');
+require_once( WPQEVENTS_PLUGIN_DIR . 'wpqe_shortcode.php');
 
 register_activation_hook( __FILE__, array($wpqe_admin, 'activate'));  
 register_deactivation_hook( __FILE__, array($wpqe_admin, 'deactivate'));  

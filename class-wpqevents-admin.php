@@ -5,8 +5,21 @@ if(!defined('ABSPATH')): die("Sorry, this file is not open for public access.");
 
 class WPQEventsAdmin {
 
+    private function init_atts($atts) {
+        return shortcode_atts([
+            'order' => 'DESC', 
+            'number' => '-1'], 
+            $atts);
+    }
+
+    private function queryAtts($atts) {
+        $a = $this->init_atts($atts);
+        return new WP_Query(array('post_type' => 'wp-quick-event', 'orderby' => $a['order'], 'posts_per_page' => $a['number']));
+    }
+
     function __construct( ) { 
         add_action('init', array($this, 'custom_post_type'));
+       add_shortcode('wp-quick-event-query', [$this, 'shortcode']);
     }
     
     //public 
@@ -33,6 +46,12 @@ class WPQEventsAdmin {
 
     function register( ) {
         add_action('admin_enqueue_scripts', array($this, 'enqueue'));
+    }
+
+    //shortcode 
+    function shortcode($atts) {
+        //$query = $this->queryAtts($atts);
+   
     }
 
 }
