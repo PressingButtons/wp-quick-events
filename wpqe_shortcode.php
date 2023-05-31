@@ -11,9 +11,11 @@ function wpqe_query($atts) {
 	
 	$a = shortcode_atts($default, $atts);
 
+	echo 'THIS IS A TEST: '. $a['count'];
+
 	$query = new WP_Query(array(
 		'post_type' => 'wp_quick_event', 
-		'numberposts' => $a['count'],
+		'posts_per_page' => $a['count'],
 		'meta_key' => 'wpqe-dates',
 		'orderby' => 'meta_value',
 		'order' => 'DESC'
