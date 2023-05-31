@@ -10,9 +10,7 @@ function wpqe_query($atts) {
 	$default = array('count' => '-1');
 	
 	$a = shortcode_atts($default, $atts);
-
-	echo 'THIS IS A TEST: '. $a['count'];
-
+	
 	$query = new WP_Query(array(
 		'post_type' => 'wp_quick_event', 
 		'posts_per_page' => $a['count'],
